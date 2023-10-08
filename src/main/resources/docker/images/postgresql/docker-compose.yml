@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+  db:
+    container_name: db_marketplace
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: marketplace
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+
+  adminer:
+    container_name: adminer_marketplace
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
