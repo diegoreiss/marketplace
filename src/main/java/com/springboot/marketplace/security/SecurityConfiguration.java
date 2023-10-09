@@ -1,5 +1,6 @@
 package com.springboot.marketplace.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,10 +14,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+    private final SecurityFilter securityFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -27,8 +32,10 @@ public class SecurityConfiguration {
                     authorize.requestMatchers(HttpMethod.POST, "/auth/login/**").permitAll();
                     authorize.requestMatchers(HttpMethod.POST, "/auth/register/**").permitAll();
                     authorize.requestMatchers(HttpMethod.POST, "/auth/confirm/**").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/auth/refresh/**").permitAll();
                     authorize.anyRequest().authenticated();
                 })
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
