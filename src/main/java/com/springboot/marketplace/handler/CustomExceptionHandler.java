@@ -25,7 +25,7 @@ public class CustomExceptionHandler {
                         Instant.now(),
                         HttpStatus.UNAUTHORIZED.value(),
                         List.of(),
-                        e.getMessage(),
+                        "Inválid credentials",
                         request.getRequestURI()
                 ));
     }
