@@ -68,13 +68,14 @@ public class AuthenticationController {
                 .body(new MessageResponseDTO("Account created, check your email for verification"));
     }
 
-    @Operation(summary = "Realiza a operação de ativação do usuário", method = "POST")
+    @Operation(summary = "Realiza a operação de ativação do usuário", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuário ativado com sucesso"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a ativação do usuário", content = @Content(schema = @Schema(implementation = StandardErrorResponseDTO.class)))
     })
-    @PostMapping(value = "/confirm", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @GetMapping(value = "/confirm", produces = {"text/plain"})
     public ResponseEntity<?> confirmAccount(@RequestParam String verificationToken) {
+        System.out.println(verificationToken);
         appUserService.enableAppUser(verificationToken);
 
         return ResponseEntity.status(HttpStatus.OK).body("confirmed");
