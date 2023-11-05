@@ -35,11 +35,9 @@ public class AppUserService implements UserDetailsService {
         AccountVerification accountVerification = accountVerificationService.save(new AccountVerification(appUserSaved));
 
         String emailBody = String.format(
-                "<form method=\"post\" action=\"%s\">" +
-                        "<input type=\"hidden\" name=\"verificationToken\" value=\"%s\">" +
-                        "<p>To enable your account click the button below.</p>" +
-                        "<button type=\"submit\">Enable your account</button>" +
-                "</form>", "http://localhost:8081/auth/confirm" ,accountVerification.getVerificationToken());
+                "<p>To enable your account click the button below.</p>" +
+                        "<a href=\"%s\">Enable your account</a>",
+                "http://localhost:8081/auth/confirm?verificationToken=" + accountVerification.getVerificationToken());
         emailSenderService.sendEmail(appUser.getEmail(), "Please confirm your email", emailBody);
     }
 
