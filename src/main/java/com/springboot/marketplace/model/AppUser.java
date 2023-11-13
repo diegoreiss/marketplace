@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,8 +26,15 @@ public class AppUser implements UserDetails {
     private String nickname;
     private String email;
     private String password;
+
+    @Transient
+    private String confirmPassword;
+
     private boolean isLocked = false;
     private boolean isEnabled = false;
+
+    @OneToMany(mappedBy = "appUser")
+    private List<Product> products;
 
     public AppUser(RegisterRequestDTO data) {
         BeanUtils.copyProperties(data, this);

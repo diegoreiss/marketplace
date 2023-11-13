@@ -15,6 +15,10 @@ public record RegisterRequestDTO(
 
         @NotBlank
         @Size(min = 8, max = 16, message = "Senha deve estar entre 8 e 16")
-        String password
+        String password,
+
+        @NotBlank
+        @Size(min = 8, max = 16, message = "Senha deve estar entre 8 e 16")
+        String confirmPassword
 ) {
 }

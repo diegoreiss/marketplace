@@ -1,6 +1,7 @@
 package com.springboot.marketplace.service;
 
 import com.springboot.marketplace.exception.EmailAlreadyExistsException;
+import com.springboot.marketplace.exception.PasswordsNotMatchException;
 import com.springboot.marketplace.model.AccountVerification;
 import com.springboot.marketplace.model.AppUser;
 import com.springboot.marketplace.repository.AppUserRepository;
@@ -25,6 +26,10 @@ public class AppUserService implements UserDetailsService {
 
     @Transactional
     public void save(AppUser appUser) {
+        if (!appUser.getPassword().equals(appUser.getConfirmPassword())) {
+            throw new PasswordsNotMatchException("Passwords not match");
+        }
+
         if (appUserRepository.existsByEmail(appUser.getEmail()))
             throw new EmailAlreadyExistsException("Email already exists.");
 

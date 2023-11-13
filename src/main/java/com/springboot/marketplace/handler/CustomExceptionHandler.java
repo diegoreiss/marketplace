@@ -3,6 +3,7 @@ package com.springboot.marketplace.handler;
 import com.springboot.marketplace.dto.response.StandardErrorResponseDTO;
 import com.springboot.marketplace.exception.ConfirmationTokenException;
 import com.springboot.marketplace.exception.EmailAlreadyExistsException;
+import com.springboot.marketplace.exception.PasswordsNotMatchException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,18 @@ public class CustomExceptionHandler {
                         HttpStatus.UNAUTHORIZED.value(),
                         List.of(),
                         "Inválid credentials",
+                        request.getRequestURI()
+                ));
+    }
+
+    @ExceptionHandler(PasswordsNotMatchException.class)
+    public ResponseEntity<StandardErrorResponseDTO> passwordsNotMatch(PasswordsNotMatchException e, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED)
+                .body(new StandardErrorResponseDTO(
+                        Instant.now(),
+                        HttpStatus.PRECONDITION_FAILED.value(),
+                        List.of(),
+                        e.getMessage(),
                         request.getRequestURI()
                 ));
     }
