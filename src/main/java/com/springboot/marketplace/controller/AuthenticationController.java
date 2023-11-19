@@ -69,7 +69,7 @@ public class AuthenticationController {
         appUserService.save(new AppUser(body));
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new MessageResponseDTO("Account created, check your email for verification"));
+                .body(new MessageResponseDTO("Conta criada com sucesso! Cheque seu email para confirmar sua conta."));
     }
 
     @Operation(summary = "Realiza a operação de ativação do usuário", method = "GET")

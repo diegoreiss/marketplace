@@ -26,7 +26,7 @@ public class CustomExceptionHandler {
                         Instant.now(),
                         HttpStatus.UNAUTHORIZED.value(),
                         List.of(),
-                        "Inválid credentials",
+                        "Credenciais Inválidas",
                         request.getRequestURI()
                 ));
     }
@@ -76,6 +76,6 @@ public class CustomExceptionHandler {
     @ExceptionHandler(ConfirmationTokenException.class)
     public ResponseEntity<String> tokenConfirmedOrExpired(ConfirmationTokenException e, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body("Token confirmed or expired");
+                .body("O token foi confirmado ou expirado");
     }
 }
