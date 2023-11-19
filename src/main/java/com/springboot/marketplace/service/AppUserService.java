@@ -27,11 +27,11 @@ public class AppUserService implements UserDetailsService {
     @Transactional
     public void save(AppUser appUser) {
         if (!appUser.getPassword().equals(appUser.getConfirmPassword())) {
-            throw new PasswordsNotMatchException("Passwords not match");
+            throw new PasswordsNotMatchException("Senhas não conferem.");
         }
 
         if (appUserRepository.existsByEmail(appUser.getEmail()))
-            throw new EmailAlreadyExistsException("Email already exists.");
+            throw new EmailAlreadyExistsException("Email já existe");
 
         String encryptedPassword = passwordEncoder.encode(appUser.getPassword());
         appUser.setPassword(encryptedPassword);
@@ -40,10 +40,10 @@ public class AppUserService implements UserDetailsService {
         AccountVerification accountVerification = accountVerificationService.save(new AccountVerification(appUserSaved));
 
         String emailBody = String.format(
-                "<p>To enable your account click the button below.</p>" +
-                        "<a href=\"%s\">Enable your account</a>",
+                "<p>Para ativar sua conta, clique no link abaixo:</p>" +
+                        "<a href=\"%s\">Ativar sua conta</a>",
                 "http://localhost:8081/auth/confirm?verificationToken=" + accountVerification.getVerificationToken());
-        emailSenderService.sendEmail(appUser.getEmail(), "Please confirm your email", emailBody);
+        emailSenderService.sendEmail(appUser.getEmail(), "Confirmação de Email", emailBody);
     }
 
     @Transactional
