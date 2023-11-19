@@ -82,7 +82,7 @@ public class AuthenticationController {
         System.out.println(verificationToken);
         appUserService.enableAppUser(verificationToken);
 
-        return ResponseEntity.status(HttpStatus.OK).body("confirmed");
+        return ResponseEntity.status(HttpStatus.OK).body("Conta confirmada");
     }
 
     @Operation(summary = "Realiza a operação de refresh token jwt", method = "POST")
