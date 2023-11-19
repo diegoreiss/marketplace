@@ -40,11 +40,10 @@ public class AuthenticationController {
 
     @Operation(summary = "Realiza o login do usuário", method = "POST")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200", description = "Autenticação realizada com sucesso", content = @Content(schema = @Schema(implementation = LoginResponseDTO.class))),
-            @ApiResponse(responseCode = "401", description = "Usuário não autenticado"),
-            @ApiResponse(responseCode = "412", description = "Dados rejeitados", content = @Content(schema = @Schema(implementation = StandardErrorResponseDTO.class))),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar a autenticação do usuário", content = @Content(schema = @Schema(implementation = StandardErrorResponseDTO.class)))
+            @ApiResponse(responseCode = "200", description = "Autenticação realizada com sucesso", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = LoginResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "Usuário não autenticado", content = @Content(mediaType = MediaType.TEXT_PLAIN_VALUE)),
+            @ApiResponse(responseCode = "412", description = "Dados rejeitados", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a autenticação do usuário", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = StandardErrorResponseDTO.class)))
     })
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDTO data) {
